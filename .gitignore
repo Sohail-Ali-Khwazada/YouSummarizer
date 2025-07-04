@@ -1,2 +1,6 @@
 **/.env
-**/myenv
+**/node_modules
+/backend/dist
+**/venv
+misc
+**/__pycache__
