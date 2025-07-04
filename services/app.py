@@ -8,7 +8,7 @@ app = Flask(__name__);
 def home():
     return "YouTube Summary API is working!";
 
-@app.route('/api/services/summary', methods=['POST'])
+@app.route('/api/get-summary', methods=['POST'])
 def summarize():
     data = request.get_json();
     video_url = data.get("video_url");

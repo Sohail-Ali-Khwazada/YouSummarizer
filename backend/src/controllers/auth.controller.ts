@@ -48,7 +48,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
     });
 
   } catch (error) {
-    console.log(`Error in signup controller`);
+    console.log("Error in signup controller");
     next(error);
   }
 
@@ -87,7 +87,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     });
 
   } catch (error) {
-    console.log(`Error in login controller`);
+    console.log("Error in login controller");
     next(error);
   }
 };

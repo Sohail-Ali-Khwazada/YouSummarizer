@@ -14,12 +14,12 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/auth",authRoutes);
-app.use("/api/getSummary",summaryRoutes);
+app.use("/api/get-summary",summaryRoutes);
 
 app.use(errorHandler);
 
 app.get("/",(req,res)=> {
-  res.send("hello word");
+  res.send("Welcome to Express server....");
 })
 
 
