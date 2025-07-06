@@ -1,11 +1,12 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import AvatarGroup from "./AvatarGroup";
-import CardGroup from "./CardGroup";
-import { Button } from "./ui/button";
+import AvatarGroup from "@/components/AvatarGroup";
+import CardGroup from "@/components/CardGroup";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger); 
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 function LandingPage() {
   useGSAP(() => {
@@ -44,10 +45,14 @@ function LandingPage() {
           <button className="bg-white text-black py-3 px-8 rounded-full border text-lg">
             See features
           </button>
-          <button className="bg-black text-white py-3 px-8 rounded-full text-lg">
-            Get Started
-          </button>
+
+          <Link to="/signup">
+            <button className="bg-black text-white py-3 px-8 rounded-full text-lg cursor-pointer">
+              Get Started
+            </button>
+          </Link>
         </div>
+
         <div className="mt-3">
           <AvatarGroup />
         </div>
@@ -72,14 +77,20 @@ function LandingPage() {
         <CardGroup />
       </div>
 
+      {/* Bottom card to signup */}
       <div className="Landing-get-started-container bg-[#F6F6F6] h-[25rem] w-full rounded-4xl mt-24 flex justify-center items-center">
         <div className="flex flex-col gap-5 justify-center items-center">
           <p className="font-semibold text-4xl">Learn smarter,faster,easier.</p>
-          <p className="text-gray-500">Upload your content and start your learning journey.</p>
-          <Button className="rounded-3xl w-36 h-12 text-md">Get Started</Button>
+          <p className="text-gray-500">
+            Upload your content and start your learning journey.
+          </p>
+          <Link to="/signup">
+            <Button className="rounded-3xl w-36 h-12 text-md cursor-pointer">
+              Get Started
+            </Button>
+          </Link>
         </div>
       </div>
-
     </div>
   );
 }

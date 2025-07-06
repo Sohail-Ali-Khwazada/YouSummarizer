@@ -2,8 +2,9 @@ import logo from "@/assets/you_logo.png";
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useRef } from "react";
+import { Link } from "react-router";
 
-gsap.registerPlugin(useGSAP); // register the hook to avoid React version 
+gsap.registerPlugin(useGSAP); 
 
 function Navbar() {
   const logoref = useRef<HTMLDivElement | null>(null);
@@ -32,7 +33,9 @@ function Navbar() {
         <li>Careers</li>
       </div>
       <div className="ml-auto mr-28 bg-black py-1.5 px-4 rounded-full" ref={navbuttonref}>
-        <button className="text-white">Get Started</button>
+        <Link to="/signup">
+          <button className="text-white cursor-pointer">Get Started</button>
+        </Link>
       </div>
     </nav>
   );
