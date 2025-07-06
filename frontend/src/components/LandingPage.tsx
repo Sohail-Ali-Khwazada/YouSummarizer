@@ -18,7 +18,7 @@ function LandingPage() {
     });
 
     gsap.to(".Landing-img-container div", {
-      scale: 2,
+      scale: 1.5,
       rotateX: 0,
       scrollTrigger: {
         trigger: ".Landing-img-container",
