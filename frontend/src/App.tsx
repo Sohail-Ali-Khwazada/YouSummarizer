@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="px-[7rem] py-44">
+      <div className="px-[7rem] pt-44 pb-20">
         <LandingPage />
       </div>
       <Footer />

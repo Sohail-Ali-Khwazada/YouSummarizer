@@ -3,8 +3,9 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import AvatarGroup from "./AvatarGroup";
 import CardGroup from "./CardGroup";
+import { Button } from "./ui/button";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger); // register the hook to avoid React version
+gsap.registerPlugin(useGSAP, ScrollTrigger); 
 
 function LandingPage() {
   useGSAP(() => {
@@ -17,7 +18,7 @@ function LandingPage() {
     });
 
     gsap.to(".Landing-img-container div", {
-      scale: 1.5,
+      scale: 2,
       rotateX: 0,
       scrollTrigger: {
         trigger: ".Landing-img-container",
@@ -69,6 +70,14 @@ function LandingPage() {
       {/* Testimonials section */}
       <div className="Landing-carousel-container mt-45">
         <CardGroup />
+      </div>
+
+      <div className="Landing-get-started-container bg-[#F6F6F6] h-[25rem] w-full rounded-4xl mt-24 flex justify-center items-center">
+        <div className="flex flex-col gap-5 justify-center items-center">
+          <p className="font-semibold text-4xl">Learn smarter,faster,easier.</p>
+          <p className="text-gray-500">Upload your content and start your learning journey.</p>
+          <Button className="rounded-3xl w-36 h-12 text-md">Get Started</Button>
+        </div>
       </div>
 
     </div>
