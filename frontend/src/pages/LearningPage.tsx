@@ -1,13 +1,15 @@
-
+import LeftPanel from "@/components/LeftPanel";
+import RightPanel from "@/components/RightPanel";
 
 function LearningPage() {
   return (
-    <div className="Learning-container overflow-hidden flex bg-slate-950 text-white h-full">
+    <div className="Learning-container flex h-[90vh]">
       {/* left panel */}
-      <div className="bg-red-500 w-1/2 h-full"> This is left panel</div>
+      <LeftPanel />
 
       {/* right panel */}
-      <div className="bg-amber-400 w-1/2 h-full">This is right panel</div>
+      <RightPanel/>
+      
     </div>
   );
 }

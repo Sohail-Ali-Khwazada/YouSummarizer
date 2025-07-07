@@ -2,7 +2,7 @@
 
 function SearchPage() {
   return (
-    <div>
+    <div className="text-white">
       This is the Search Page.
     </div>
   )

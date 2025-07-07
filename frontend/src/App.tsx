@@ -6,6 +6,7 @@ import Signup from "@/pages/Signup";
 import LoginPage from "@/pages/LoginPage";
 import SearchPage from "@/pages/SearchPage";
 import LearningPage from "@/pages/LearningPage";
+import TestPage from "./components/TestPage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       { path: "content", Component: LearningPage },
     ],
   },
+  {
+    path: "/test",
+    Component: TestPage
+  }
 
 ]);
 
