@@ -1,39 +1,48 @@
 import logo from "@/assets/you_logo.png";
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { Link } from "react-router";
 
-gsap.registerPlugin(useGSAP); 
+gsap.registerPlugin(useGSAP);
 
 function Navbar() {
   const logoref = useRef<HTMLDivElement | null>(null);
   const navtagsref = useRef<HTMLDivElement | null>(null);
   const navbuttonref = useRef<HTMLDivElement | null>(null);
-  
 
-  useGSAP(()=> {
-    gsap.from([logoref.current,navtagsref.current,navbuttonref.current],{
-      y:-50,
-      duration:0.6,
-      opacity:0,
-      stagger:0.2
-    })
-  })
+  useGSAP(() => {
+    gsap.from([logoref.current, navtagsref.current, navbuttonref.current], {
+      y: -50,
+      duration: 0.6,
+      opacity: 0,
+      stagger: 0.2,
+    });
+  });
 
   return (
     <nav className="flex backdrop-blur-lg bg-white/50 pb-4 pt-4 border-b border-[#F6F6F6] fixed top-0 w-full z-10">
-      <div className="ml-28 mr-12 flex gap-2" ref={logoref}>
-        <img src={logo} alt="logo" className="w-8 h-8 mix-blend-multiply" />
-        <div className="font-bold tracking-wide">YouSummarizer</div>
+      <Link to={"/"}>
+        <div className="ml-28 mr-12 flex gap-2 cursor-pointer" ref={logoref}>
+          <img src={logo} alt="logo" className="w-8 h-8 mix-blend-multiply" />
+          <div className="font-bold tracking-wide">YouSummarizer</div>
+        </div>
+      </Link>
+
+      <div
+        className="flex list-none gap-16 font-medium text-gray-500"
+        ref={navtagsref}
+      >
+        <Link to={"/"}><li className="cursor-pointer">Features</li></Link>
+        <Link to={"/learn"}><li className="cursor-pointer">Learn</li></Link>
+        <Link to={"/"}><li className="cursor-pointer">Careers</li></Link>
+
       </div>
-      <div className="flex list-none gap-16 font-medium text-gray-500" ref={navtagsref}>
-        <li>Features</li>
-        <li>Pricing</li>
-        <li>Careers</li>
-      </div>
-      <div className="ml-auto mr-28 bg-black py-1.5 px-4 rounded-full" ref={navbuttonref}>
-        <Link to="/signup">
+      <div
+        className="ml-auto mr-28 bg-black py-1.5 px-4 rounded-full"
+        ref={navbuttonref}
+      >
+        <Link to={"/signup"}>
           <button className="text-white cursor-pointer">Get Started</button>
         </Link>
       </div>
