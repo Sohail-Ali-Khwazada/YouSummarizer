@@ -5,7 +5,7 @@ function LearnLayout() {
   return (
     <>
       <Navbar />
-      <div className="mt-18 h-[90vh] px-8">
+      <div className="mt-18 h-[90vh] px-4">
         <Outlet />
       </div>
     </>
