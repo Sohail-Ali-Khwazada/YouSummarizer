@@ -14,12 +14,12 @@ function RightPanel() {
   };
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 border-l pl-2">
       {/* navigation */}
-      <div className="bg-[#222222] w-full h-[3rem] flex justify-around rounded-xl text-gray-300 py-2">
+      <div className="w-full h-[2.5rem] flex justify-around rounded-xl border py-1">
         <button
-          className={`cursor-pointer hover:text-white w-40 rounded-lg  ${
-            activePanel == "Chat" && "bg-[#171717] text-white"
+          className={`cursor-pointer w-40 rounded-lg hover:bg-[#F3F3F3] ${
+            activePanel == "Chat" && "bg-[#F3F3F3]"
           }`}
           onClick={handleClick}
         >
@@ -31,8 +31,8 @@ function RightPanel() {
           </div>
         </button>
         <button
-          className={`cursor-pointer hover:text-white w-40 rounded-lg ${
-            activePanel == "Summary" && "bg-[#171717] text-white"
+          className={`cursor-pointer hover:bg-[#F3F3F3] w-40 rounded-lg ${
+            activePanel == "Summary" && "bg-[#F3F3F3]"
           }`}
           onClick={handleClick}
         >
@@ -42,8 +42,8 @@ function RightPanel() {
           </div>
         </button>
         <button
-          className={`cursor-pointer hover:text-white w-40 rounded-lg ${
-            activePanel == "Notes" && "bg-[#171717] text-white"
+          className={`cursor-pointer hover:bg-[#F3F3F3] w-40 rounded-lg ${
+            activePanel == "Notes" && "bg-[#F3F3F3]"
           }`}
           onClick={handleClick}
         >

@@ -2,7 +2,7 @@
 
 function ChatScreen() {
   return (
-    <div className="text-white">
+    <div className="">
       This is chat screen
     </div>
   )

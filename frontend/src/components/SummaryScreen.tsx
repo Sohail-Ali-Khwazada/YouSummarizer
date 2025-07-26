@@ -2,7 +2,7 @@
 
 function SummaryScreen() {
   return (
-    <div className="text-white">
+    <div className="">
       This is Summary Screen
     </div>
   )

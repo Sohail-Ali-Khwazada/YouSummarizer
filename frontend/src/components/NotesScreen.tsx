@@ -4,6 +4,7 @@ function NotesScreen() {
   return (
     <div className="">
       {/* <SimpleEditor /> */}
+      This is notes screen
     </div>
   )
 }
