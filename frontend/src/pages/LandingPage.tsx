@@ -31,7 +31,7 @@ function LandingPage() {
   });
 
   return (
-    <div className="Landing-wrapper">
+    <div className="Landing-wrapper pt-44 pb-20">
       {/* heading section */}
       <div className="Landing-heading flex flex-col gap-5 items-center w-[50rem] mx-auto h-96">
         <div className="font-medium text-[3.5rem]">

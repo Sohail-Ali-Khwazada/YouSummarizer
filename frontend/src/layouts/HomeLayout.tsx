@@ -6,7 +6,7 @@ function HomeLayout() {
   return (
     <>
       <Navbar />
-      <div className="px-[7rem] pt-44 pb-20">
+      <div className="px-[7rem]">
         <Outlet />
       </div>
       <Footer />
