@@ -2,22 +2,50 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useGlobalContext } from "@/context/GlobalContext";
 import logo from "@/assets/you_logo.png";
 import google from "@/assets/google.png";
+import toast from "react-hot-toast";
 
 function Signup() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { setAuthUser } = useGlobalContext();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSignup = () => {
-    console.log(email);
-    console.log(password);
+  const handleSignup = async() => {
+    if(!username || !password) {
+      toast.error("Please fill in all the fields");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URI}/api/auth/signup`,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username,password }), 
+      });
+
+      const userdata = await res.json();
+
+      if(userdata.error) {
+        throw new Error(userdata.error);
+      }
+      localStorage.setItem("you-user", JSON.stringify(userdata));
+      setAuthUser(userdata);
+      navigate('/learn');
+      
+    } catch(error) {
+      if(error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   }
   return (
     <div className="flex items-center justify-center p-4 mt-20 pt-10 mb-8">
@@ -63,10 +91,10 @@ function Signup() {
           {/* Email Input */}
           <div>
             <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="h-12 bg-white border-gray-300 placeholder:text-gray-500"
             />
           </div>
