@@ -8,6 +8,7 @@ import SearchPage from "@/pages/SearchPage";
 import LearningPage from "@/pages/LearningPage";
 import TestPage from "@/components/TestPage";
 import { GlobalContextProvider } from "@/context/GlobalContext";
+import { Toaster } from "react-hot-toast";
 
 const authCheck = () => {
   const userData = localStorage.getItem("you-user");
@@ -46,6 +47,7 @@ function App() {
   return (
     <GlobalContextProvider>
       <RouterProvider router={router} />
+      <Toaster />
     </GlobalContextProvider>
   );
 }
