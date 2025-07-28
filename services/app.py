@@ -8,8 +8,8 @@ app = Flask(__name__);
 def home():
     return "YouTube Summary API is working!";
 
-@app.route('/api/get-summary', methods=['POST'])
-def summarize():
+@app.route('/api/get-video-details', methods=['POST'])
+def videoData():
     data = request.get_json();
     video_url = data.get("video_url");
 
@@ -17,13 +17,16 @@ def summarize():
     if not video_url:
         return jsonify({"error": "Missing video_url"}), 400;
 
-    transcript = genTranscript(video_url);
+    result  = genTranscript(video_url);
 
-    if transcript.startswith("Error"):
-        return jsonify({"error": transcript}), 500;
+    if "error" in result:
+        return jsonify({"error": result["error"]}), 500;
 
-    summary = summarize_transcript(transcript);
-    return jsonify({"summary": summary});
+    transcript_text = result["transcript_text"];
+    formatted_transcript = result["formatted_transcript"];
+
+    summary = summarize_transcript(transcript_text);
+    return jsonify({"transcript":formatted_transcript,"summary": summary});
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)

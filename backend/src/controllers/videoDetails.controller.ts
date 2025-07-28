@@ -1,10 +1,10 @@
-import { application, NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AppError } from "../utils/AppError";
 import config from "../config/config";
 
 
 
-export const getSummary = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getDetails = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
 
   try {
     const { video_url } = req.body;
@@ -16,7 +16,7 @@ export const getSummary = async(req: Request, res: Response, next: NextFunction)
       throw new AppError("video url is required!",400);
     }
 
-    const flask_res = await fetch(`${config.FLASK_URI}/api/get-summary`, {
+    const flask_res = await fetch(`${config.FLASK_URI}/api/get-video-details`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({video_url})
@@ -30,7 +30,7 @@ export const getSummary = async(req: Request, res: Response, next: NextFunction)
 
     res.status(200).json(data);
   } catch(error) {
-    console.log("Error in getSummary controller");
+    console.log("Error in getDetails controller");
     next(error);
   }
 }
