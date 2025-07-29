@@ -5,10 +5,8 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.schema import StrOutputParser 
 
 
-# Load environment variables from .env
 load_dotenv()
 
-# Define prompt template with system and human messages
 prompt = [
     ("system", """
         You are an advanced AI that summarizes content in a structured format.
@@ -40,7 +38,7 @@ model = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
 chain = prompt_template | model | StrOutputParser()
 
 
-def summarize_transcript(transcript):
+def sumTranscript(transcript):
   return chain.invoke({"transcript": transcript})
 
 
