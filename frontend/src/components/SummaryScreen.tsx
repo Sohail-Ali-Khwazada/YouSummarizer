@@ -1,9 +1,10 @@
-
+import { useGlobalContext } from "@/context/GlobalContext"
 
 function SummaryScreen() {
+  const { selectedVideo } = useGlobalContext();
   return (
     <div className="">
-      This is Summary Screen
+      {selectedVideo?.summary}
     </div>
   )
 }

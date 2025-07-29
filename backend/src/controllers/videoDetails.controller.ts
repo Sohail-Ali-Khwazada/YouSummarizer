@@ -28,7 +28,10 @@ export const getDetails = async(req: Request, res: Response, next: NextFunction)
       throw new AppError(data.error,500);
     }
 
-    res.status(200).json(data);
+    res.status(200).json({
+      ...data,
+      video_url
+    });
   } catch(error) {
     console.log("Error in getDetails controller");
     next(error);

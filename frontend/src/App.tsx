@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     loader: authCheck,
     children: [
       { index: true, Component: SearchPage },
-      { path: "content", Component: LearningPage },
+      { path: ":id", Component: LearningPage },
     ],
   },
   {

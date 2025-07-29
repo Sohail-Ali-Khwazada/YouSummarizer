@@ -5,10 +5,22 @@ interface AuthUser {
   username: string;
   token: string;
 }
+interface transcript_segments {
+  timestamp: string;
+  text: string;
+}
+interface video {
+  video_url: string;
+  title: string;
+  summary: string;
+  transcript: transcript_segments[];
+}
 
 interface GlobalContextType {
   authUser: AuthUser | null;
   setAuthUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
+  selectedVideo: video | null;
+  setSelectedVideo: React.Dispatch<React.SetStateAction<video | null>>;
 }
 
 
@@ -24,7 +36,9 @@ export const useGlobalContext = () => {
 
 export const GlobalContextProvider = ({children} : {children:ReactNode}) => {
   const [authUser, setAuthUser] = useState<AuthUser | null>(JSON.parse(localStorage.getItem("you-user") || "null"));
-  return <GlobalContext.Provider value={{authUser,setAuthUser}}>
+  const [selectedVideo, setSelectedVideo] = useState<video | null>(null);
+
+  return <GlobalContext.Provider value={{authUser,setAuthUser,selectedVideo,setSelectedVideo}}>
     {children}
   </GlobalContext.Provider>
 }

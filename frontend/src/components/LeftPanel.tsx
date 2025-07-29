@@ -3,10 +3,12 @@ import { GoBook } from "react-icons/go";
 import { RxText } from "react-icons/rx";
 import { IoChevronUp } from "react-icons/io5";
 import { IoChevronDown } from "react-icons/io5";
+// import { useGlobalContext } from "@/context/GlobalContext";
 
 function LeftPanel() {
   const [activePanel, setActivePanel] = useState<string>("Chapters");
   const [fullScreen, setFullScreen] = useState<boolean>(false);
+  
 
   const handleFullScreen = () => {
     setFullScreen((prev) => !prev);
@@ -71,6 +73,7 @@ function Chapters() {
 }
 
 function Transcripts() {
+  // const { selectedVideo } = useGlobalContext();
   return (
     <div className="p-4">
       Transcripts will go here.
