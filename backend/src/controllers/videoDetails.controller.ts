@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../utils/AppError";
 import config from "../config/config";
+import Video from "../models/video.model";
+import { VideoDocument } from "../types/custom";
 
 
 
@@ -16,6 +18,13 @@ export const getDetails = async(req: Request, res: Response, next: NextFunction)
       throw new AppError("video url is required!",400);
     }
 
+    const video: VideoDocument | null = await Video.findOne({video_url});
+
+    if(video) {
+      res.status(200).json(video);
+      return;
+    }
+
     const flask_res = await fetch(`${config.FLASK_URI}/api/get-video-details`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -28,10 +37,13 @@ export const getDetails = async(req: Request, res: Response, next: NextFunction)
       throw new AppError(data.error,500);
     }
 
-    res.status(200).json({
+    const newVideo: VideoDocument = await Video.create({
       ...data,
       video_url
     });
+
+
+    res.status(200).json(newVideo);
   } catch(error) {
     console.log("Error in getDetails controller");
     next(error);

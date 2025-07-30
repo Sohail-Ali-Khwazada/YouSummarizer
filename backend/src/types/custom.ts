@@ -14,6 +14,18 @@ export interface UserDocument extends Document {
   password: string;
 } 
 
+export interface transcript_segments {
+  timestamp: string;
+  text: string;
+}
+
+export interface VideoDocument extends Document {
+  video_url: string;
+  title: string;
+  summary: string;
+  transcript: transcript_segments[];
+}
+
 export interface userWithoutPassword extends Document{
   username: string;
 }
