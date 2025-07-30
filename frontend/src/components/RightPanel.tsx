@@ -14,7 +14,7 @@ function RightPanel() {
   };
 
   return (
-    <div className="w-1/2 border-l pl-2">
+    <div className="flex flex-col w-1/2 border-l pl-2">
       {/* navigation */}
       <div className="w-full h-[2.5rem] flex justify-around rounded-xl border py-1">
         <button
@@ -53,11 +53,11 @@ function RightPanel() {
           </div>
         </button>
       </div>
-
-      {activePanel == "Chat" && <ChatScreen />}
-      {activePanel == "Summary" && <SummaryScreen />}
-      {activePanel == "Notes" && <NotesScreen />}
-
+      <div className="overflow-y-auto">
+        {activePanel == "Chat" && <ChatScreen />}
+        {activePanel == "Summary" && <SummaryScreen />}
+        {activePanel == "Notes" && <NotesScreen />}
+      </div>
     </div>
   );
 }

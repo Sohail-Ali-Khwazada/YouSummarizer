@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router";
 
 
-
 function LearningPage() {
 
   const { id } = useParams();
@@ -41,7 +40,7 @@ function LearningPage() {
   },[]);
 
   return (
-    <div className="Learning-container flex h-[90vh]">
+    <div className="Learning-container flex h-[90vh] overflow-hidden font-roboto">
       {/* left panel */}
       <LeftPanel />
 

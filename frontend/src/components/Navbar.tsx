@@ -35,7 +35,7 @@ function Navbar() {
   });
 
   return (
-    <nav className="flex backdrop-blur-lg bg-white/50 pb-4 pt-4 border-b border-[#F6F6F6] fixed top-0 w-full z-10">
+    <nav className="flex backdrop-blur-lg bg-white/50 pb-4 pt-4 border-b border-[#F6F6F6] fixed top-0 w-full z-10 font-roboto">
       <Link to={"/"}>
         <div className="ml-28 flex gap-2 cursor-pointer items-center" ref={logoref}>
           <img src={logo} alt="logo" className="w-8 h-8 mix-blend-multiply" />
@@ -45,7 +45,7 @@ function Navbar() {
 
       {selectedVideo ? (
         <div
-          className="flex text-gray-900 ml-4 items-center"
+          className="flex text-gray-900 ml-4 items-center font-roboto"
           ref={navtagsref}
         >
           {selectedVideo.title}
