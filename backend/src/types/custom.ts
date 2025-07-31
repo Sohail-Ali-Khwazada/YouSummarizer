@@ -1,5 +1,4 @@
-import { Document } from "mongoose";
-
+import mongoose, { Document } from "mongoose";
 
 export interface Config {
   PORT: number;
@@ -12,7 +11,11 @@ export interface Config {
 export interface UserDocument extends Document {
   username: string;
   password: string;
-} 
+}
+
+export interface userWithoutPassword extends Document {
+  username: string;
+}
 
 export interface transcript_segments {
   timestamp: string;
@@ -26,9 +29,19 @@ export interface VideoDocument extends Document {
   transcript: transcript_segments[];
 }
 
-export interface userWithoutPassword extends Document{
-  username: string;
+export interface chat extends Document {
+  sender: "user" | "bot";
+  message: string;
+  timestamp: Date;
 }
+export interface UserVideoDataDocument extends Document {
+  user: mongoose.Schema.Types.ObjectId;
+  video: mongoose.Schema.Types.ObjectId;
+  notes: string;
+  chatHistory: chat[];
+}
+
+
 
 export interface AppError extends Error {
   status?: number;

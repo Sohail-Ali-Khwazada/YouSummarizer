@@ -5,7 +5,8 @@ import { VideoDocument } from "../types/custom";
 const videoSchema = new mongoose.Schema({
   video_url: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   title: {
     type: String,

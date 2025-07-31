@@ -44,7 +44,14 @@ function SearchPage() {
       <div className="flex flex-col gap-4 pb-10">
         <div className="text-xl">Recents</div>
         {/* Cards */}
-        <div className="">
+        <div className="flex gap-4">
+          <Card className="w-[18rem] h-[14.5rem] cursor-pointer rounded-2xl pt-0 overflow-hidden">
+              <img src="https://i.ytimg.com/vi/ZuiIvevLg40/maxresdefault.jpg" alt="thumbnail" className="object-cover"/>
+              <div className="flex items-center gap-2 px-4">
+                <CiPlay1 />
+                <div className="font-normal">Former FBI Agent: If They Do ...</div>
+              </div>
+          </Card>
           <Card className="w-[18rem] h-[14.5rem] cursor-pointer rounded-2xl pt-0 overflow-hidden">
               <img src="https://i.ytimg.com/vi/ZuiIvevLg40/maxresdefault.jpg" alt="thumbnail" className="object-cover"/>
               <div className="flex items-center gap-2 px-4">
