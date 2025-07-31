@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 import { userWithoutPassword } from "../types/custom.js";
 import { NextFunction, Request, Response } from "express";
 import config from "../config/config.js";
-import { AppError } from "../utils/AppError";
+import { AppError } from "../utils/AppError.util.js";
 
 
 

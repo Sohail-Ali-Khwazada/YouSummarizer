@@ -14,7 +14,7 @@ function LearningPage() {
   useEffect(()=> {
     const fetchVideoData = async() => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URI}/api/get-video-details`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URI}/api/video/getVideo`,{
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({"video_url" : `https://www.youtube.com/watch?v=${id}`})

@@ -6,14 +6,22 @@ interface AuthUser {
   token: string;
 }
 interface transcript_segments {
+  _id: string;
   timestamp: string;
   text: string;
+}
+interface chat {
+  sender: "user" | "bot";
+  message: string;
+  timestamp: Date;
 }
 interface video {
   video_url: string;
   title: string;
   summary: string;
   transcript: transcript_segments[];
+  notes: string;
+  chatHistory: chat[]
 }
 
 interface GlobalContextType {

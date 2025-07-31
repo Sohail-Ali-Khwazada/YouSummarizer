@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from "express"
 import User from "../models/user.model";
 import { UserDocument } from "../types/custom";
 import bcrypt from "bcryptjs";
-import generateToken from "../utils/generateToken";
-import { AppError } from "../utils/AppError";
+import generateToken from "../utils/generateToken.util";
+import { AppError } from "../utils/AppError.util";
 
 
 export const signup = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

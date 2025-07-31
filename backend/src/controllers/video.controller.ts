@@ -1,23 +1,35 @@
 import { NextFunction, Request, Response } from "express";
-import { AppError } from "../utils/AppError";
+import { AppError } from "../utils/AppError.util";
 import config from "../config/config";
 import Video from "../models/video.model";
 import UserVideoData from "../models/uservideodata.model";
-import { VideoDocument, UserVideoDataDocument } from "../types/custom";
+import { VideoDocument, UserVideoDataDocument, VideoResponse } from "../types/custom";
+
+
 
 export const getAllVideos = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userId = req.user?._id;
-    if(!userId) {
+    if (!userId) {
       throw new AppError("User does not have a _id", 500);
     }
-    const videos: UserVideoDataDocument[] = await UserVideoData.find({user: userId}).populate('video');
-    res.status(200).json(videos);
-  } catch(error) {
+    const videos = await UserVideoData.find({ user: userId }).select("video notes chatHistory").populate<{ video: VideoDocument }>('video');
+
+    const requiredVideosFields: VideoResponse[] = videos.map((record) => {
+      return {
+        video_url: record.video.video_url,
+        title: record.video.title,
+        summary: record.video.summary,
+        transcript: record.video.transcript,
+        notes: record.notes,
+        chatHistory: record.chatHistory,
+      };
+    });
+    res.status(200).json(requiredVideosFields);
+  } catch (error) {
     console.log("Error in getAllVideos controller");
     next(error);
   }
-
 }
 
 export const getVideo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -35,10 +47,18 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
     const videoData: VideoDocument | null = await Video.findOne({ video_url });
 
     if (videoData) {
-      const userVideoRecord: UserVideoDataDocument | null = await UserVideoData.findOne({ user: userId, video: videoData._id }).populate("video");
+      const userVideoRecord = await UserVideoData.findOne({ user: userId, video: videoData._id }).select("video notes chatHistory").populate<{ video: VideoDocument }>("video");
 
       if (userVideoRecord) {
-        res.status(200).json(userVideoRecord);
+
+        res.status(200).json({
+          video_url: videoData.video_url,
+          title: videoData.title,
+          summary: videoData.summary,
+          transcript: videoData.transcript,
+          notes: userVideoRecord.notes,
+          chatHistory: userVideoRecord.chatHistory
+        });
         return;
       }
       const newUserVideoRecord: UserVideoDataDocument = await UserVideoData.create({
@@ -47,8 +67,15 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
         notes: "",
         chatHistory: [],
       });
-      const populatedRecord: UserVideoDataDocument = await newUserVideoRecord.populate("video");
-      res.status(200).json(populatedRecord);
+
+      res.status(200).json({
+        video_url: videoData.video_url,
+        title: videoData.title,
+        summary: videoData.summary,
+        transcript: videoData.transcript,
+        notes: newUserVideoRecord.notes,
+        chatHistory: newUserVideoRecord.chatHistory
+      });
       return;
     }
 
@@ -73,8 +100,15 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
       user: userId,
       video: newVideo._id,
     });
-    const populatedRecord: UserVideoDataDocument = await newUserVideoRecord.populate("video");
-    res.status(200).json(populatedRecord);
+
+    res.status(200).json({
+      video_url: newVideo.video_url,
+      title: newVideo.title,
+      summary: newVideo.summary,
+      transcript: newVideo.transcript,
+      notes: newUserVideoRecord.notes,
+      chatHistory: newUserVideoRecord.chatHistory
+    });
 
   } catch (error) {
     console.log("Error in getDetails controller");

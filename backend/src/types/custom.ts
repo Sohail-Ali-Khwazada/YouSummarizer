@@ -13,9 +13,7 @@ export interface UserDocument extends Document {
   password: string;
 }
 
-export interface userWithoutPassword extends Document {
-  username: string;
-}
+export type userWithoutPassword = Omit<UserDocument, "password">;
 
 export interface transcript_segments {
   timestamp: string;
@@ -29,7 +27,7 @@ export interface VideoDocument extends Document {
   transcript: transcript_segments[];
 }
 
-export interface chat extends Document {
+export interface chat {
   sender: "user" | "bot";
   message: string;
   timestamp: Date;
@@ -41,8 +39,14 @@ export interface UserVideoDataDocument extends Document {
   chatHistory: chat[];
 }
 
-
-
+export interface VideoResponse {
+  video_url: string;
+  title: string;
+  summary: string;
+  transcript: transcript_segments[];
+  notes: string;
+  chatHistory: chat[];
+}
 export interface AppError extends Error {
   status?: number;
 }
