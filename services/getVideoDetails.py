@@ -64,7 +64,9 @@ def getTitle(video_id):
 def getVideoDetails(video_url):
     try:
         video_id = video_url.split("v=")[1];
-        transcript = YouTubeTranscriptApi.get_transcript(video_id);
+        # transcript = YouTubeTranscriptApi.get_transcript(video_id);
+        fetched_transcript = YouTubeTranscriptApi().fetch(video_id, languages=['en'])
+        transcript = fetched_transcript.to_raw_data()
         grouped_transcript = groupTranscript(transcript,30);
 
         formatted_transcript = [];

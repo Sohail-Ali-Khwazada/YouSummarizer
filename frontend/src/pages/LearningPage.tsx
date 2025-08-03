@@ -9,14 +9,17 @@ import { useParams } from "react-router";
 function LearningPage() {
 
   const { id } = useParams();
-  const { setSelectedVideo } = useGlobalContext();
+  const { setSelectedVideo,authUser } = useGlobalContext();
 
   useEffect(()=> {
     const fetchVideoData = async() => {
       try {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URI}/api/video/getVideo`,{
           method: "POST",
-          headers: {"Content-Type": "application/json"},
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer ' + authUser?.token,
+          },
           body: JSON.stringify({"video_url" : `https://www.youtube.com/watch?v=${id}`})
         });
 

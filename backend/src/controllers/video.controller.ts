@@ -4,7 +4,7 @@ import config from "../config/config";
 import Video from "../models/video.model";
 import UserVideoData from "../models/uservideodata.model";
 import { VideoDocument, UserVideoDataDocument, VideoResponse } from "../types/custom";
-
+import { updateVecStore } from "../utils/updateVectorStore";
 
 
 export const getAllVideos = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -33,7 +33,6 @@ export const getAllVideos = async (req: Request, res: Response, next: NextFuncti
 }
 
 export const getVideo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-
   try {
     const userId = req.user?._id;
     const { video_url } = req.body;
@@ -47,10 +46,10 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
     const videoData: VideoDocument | null = await Video.findOne({ video_url });
 
     if (videoData) {
+      updateVecStore(videoData.transcript);
       const userVideoRecord = await UserVideoData.findOne({ user: userId, video: videoData._id }).select("video notes chatHistory").populate<{ video: VideoDocument }>("video");
 
       if (userVideoRecord) {
-
         res.status(200).json({
           video_url: videoData.video_url,
           title: videoData.title,
@@ -101,6 +100,8 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
       video: newVideo._id,
     });
 
+    updateVecStore(newVideo.transcript);
+
     res.status(200).json({
       video_url: newVideo.video_url,
       title: newVideo.title,
@@ -114,4 +115,26 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
     console.log("Error in getDetails controller");
     next(error);
   }
+}
+
+export const getAns = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const { question } = req.body;
+  if(!question) {
+    throw new AppError("question is required!", 400);
+  }
+
+  const flask_res = await fetch(`${config.FLASK_URI}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question })
+  })
+
+  const data = await flask_res.json();
+
+  if (data.error) {
+    throw new AppError(data.error, 500);
+  }
+
+  res.status(200).json(data);
+
 }
