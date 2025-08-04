@@ -1,11 +1,13 @@
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useEffect, useRef } from "react";
 
-function Transcripts({
+function TranscriptsChapters({
+  activePanel,
   handleSeek,
   currentTime,
   autoScroll,
 }: {
+  activePanel: string;
   handleSeek: (time: number) => void;
   currentTime: number;
   autoScroll: boolean;
@@ -44,27 +46,64 @@ function Transcripts({
       handleSeek(time);
     }
   };
-
+ 
   useEffect(() => {
     if (!selectedVideo || !autoScroll) return;
 
-    const activeIndex = selectedVideo.transcript.findIndex((el, i) => {
-      const current = convertIntoSecs(el.timestamp);
-      const next = convertIntoSecs(
-        selectedVideo.transcript[i + 1]?.timestamp || "99:59:59"
-      );
-      return currentTime >= current && currentTime < next;
-    });
+    let activeIndex = -1;
 
-    if (activeIndex !== -1 && refs.current[activeIndex]) {
-      refs.current[activeIndex].scrollIntoView({
+    if (activePanel === "Chapters") {
+      activeIndex = selectedVideo.chapter.findIndex((el, i) => {
+        const current = convertIntoSecs(el.startTime);
+        const next = convertIntoSecs(
+          selectedVideo.chapter[i + 1]?.startTime || "99:59:59"
+        );
+        return currentTime >= current && currentTime < next;
+      });
+    } else {
+      activeIndex = selectedVideo.transcript.findIndex((el, i) => {
+        const current = convertIntoSecs(el.timestamp);
+        const next = convertIntoSecs(
+          selectedVideo.transcript[i + 1]?.timestamp || "99:59:59"
+        );
+        return currentTime >= current && currentTime < next;
+      });
+    }
+    const node = refs.current[activeIndex];
+
+    if (activeIndex !== -1 && node) {
+      node.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
     }
   }, [currentTime]);
 
-  return (
+  return activePanel === "Chapters" ? (
+    <div className="p-6 space-y-6">
+      {selectedVideo?.chapter.map((el, index) => (
+        <div
+          key={index}
+          ref={(el) => {
+            refs.current[index] = el;
+          }}
+          data-start={el.startTime}
+          onClick={handleClick}
+          className="cursor-pointer rounded-xl p-4 transition hover:bg-[#F3F3F3]"
+        >
+          <div className="text-base text-[#595959] mb-2 font-inter">
+            {formatForDisplay(el.startTime)}
+          </div>
+          <div className="text-lg font-semibold text-gray-900 leading-snug">
+            {el.title}
+          </div>
+          <div className="text-base text-gray-800 mt-1 leading-relaxed">
+            {el.description}
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
     <div className="p-4 space-y-4">
       {selectedVideo?.transcript.map((el, index) => (
         <div
@@ -87,4 +126,4 @@ function Transcripts({
   );
 }
 
-export default Transcripts;
+export default TranscriptsChapters;

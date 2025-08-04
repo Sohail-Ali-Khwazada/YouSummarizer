@@ -8,8 +8,7 @@ import YouTube, {
   type YouTubeEvent,
   type YouTubePlayer,
 } from "react-youtube";
-import Transcripts from "./Transcripts";
-import Chapters from "./Chapters";
+import TranscriptsChapters from "./TranscriptsChapters";
 
 function LeftPanel() {
   const { selectedVideo } = useGlobalContext();
@@ -116,21 +115,13 @@ function LeftPanel() {
           </button>
         </div>
 
-        {/* Trancripts and chapters */}
         <div className="flex-1 overflow-y-auto">
-          {activePanel === "Chapters" ? (
-            <Chapters
-             handleSeek={handleSeek}
-             currentTime={currentTime}
-             autoScroll={autoScroll}
-            />
-          ) : (
-            <Transcripts
-              handleSeek={handleSeek}
-              currentTime={currentTime}
-              autoScroll={autoScroll}
-            />
-          )}
+          <TranscriptsChapters
+           activePanel= {activePanel}
+           handleSeek={handleSeek}
+           currentTime={currentTime}
+           autoScroll={autoScroll}
+          />
         </div>
       </div>
     </div>
