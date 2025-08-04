@@ -2,42 +2,10 @@ import os;
 import requests;
 from youtube_transcript_api import YouTubeTranscriptApi;
 from dotenv import load_dotenv;
+from utils import format_timestamp,groupTranscript
 
 load_dotenv();
 
-def format_timestamp(seconds):
-    hours = int(seconds // 3600)
-    minutes = int((seconds % 3600) // 60)
-    secs = int(seconds % 60)
-    return f"{hours:02d}:{minutes:02d}:{secs:02d}"
-
-def groupTranscript(transcript, interval):
-    grouped = []
-    current_group = {"start": None, "text": ""}
-    group_start = 0
-
-    for entry in transcript:
-        start_time = entry["start"]
-        text = entry["text"]
-
-        if current_group["start"] is None:
-            current_group["start"] = start_time
-            group_start = start_time
-
-        if start_time < group_start + interval:
-            current_group["text"] += (" " if current_group["text"] else "") + text
-        else:
-            grouped.append(current_group)
-            current_group = {
-                "start": start_time,
-                "text": text
-            }
-            group_start = start_time
-
-    if current_group["text"]:
-        grouped.append(current_group)
-        
-    return grouped
 
 # https://www.googleapis.com/youtube/v3/videos?part=snippet&id=dQw4w9WgXcQ&key=API_KEY
 def getTitle(video_id):

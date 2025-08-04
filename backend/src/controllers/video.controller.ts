@@ -22,6 +22,7 @@ export const getAllVideos = async (req: Request, res: Response, next: NextFuncti
         title: record.video.title,
         summary: record.video.summary,
         transcript: record.video.transcript,
+        chapter: record.video.chapter,
         notes: record.notes,
         chatHistory: record.chatHistory,
       };
@@ -57,6 +58,7 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
           title: videoData.title,
           summary: videoData.summary,
           transcript: videoData.transcript,
+          chapter: videoData.chapter,
           notes: userVideoRecord.notes,
           chatHistory: userVideoRecord.chatHistory
         });
@@ -74,6 +76,7 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
         title: videoData.title,
         summary: videoData.summary,
         transcript: videoData.transcript,
+        chapter: videoData.chapter,
         notes: newUserVideoRecord.notes,
         chatHistory: newUserVideoRecord.chatHistory
       });
@@ -109,6 +112,7 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
       title: newVideo.title,
       summary: newVideo.summary,
       transcript: newVideo.transcript,
+      chapter: newVideo.chapter,
       notes: newUserVideoRecord.notes,
       chatHistory: newUserVideoRecord.chatHistory
     });

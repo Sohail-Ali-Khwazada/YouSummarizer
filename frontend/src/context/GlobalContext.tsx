@@ -9,21 +9,29 @@ interface AuthUser {
   profilePic?: string;
   token: string;
 }
-interface transcript_segments {
-  _id: string;
-  timestamp: string;
-  text: string;
-}
+
 interface chat {
   sender: "user" | "bot";
   message: string;
   timestamp: Date;
 }
+interface transcript_segments {
+  _id: string;
+  timestamp: string;
+  text: string;
+}
+export interface chapter_segments {
+  title: string;
+  startTime: string;
+  description: string;
+}
+
 export interface video {
   video_url: string;
   title: string;
   summary: string;
   transcript: transcript_segments[];
+  chapter: chapter_segments[];
   notes: string;
   chatHistory: chat[]
 }

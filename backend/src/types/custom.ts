@@ -23,12 +23,18 @@ export interface transcript_segments {
   timestamp: string;
   text: string;
 }
+export interface chapter_segments {
+  title: string;
+  startTime: string;
+  description: string;
+}
 
 export interface VideoDocument extends Document {
   video_url: string;
   title: string;
   summary: string;
   transcript: transcript_segments[];
+  chapter: chapter_segments[];
 }
 
 export interface chat {
@@ -48,6 +54,7 @@ export interface VideoResponse {
   title: string;
   summary: string;
   transcript: transcript_segments[];
+  chapter: chapter_segments[];
   notes: string;
   chatHistory: chat[];
 }

@@ -5,6 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.runnables import RunnableParallel, RunnablePassthrough, RunnableLambda
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from utils import chunkingConfig
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,7 +21,8 @@ def update_vector_store(transcript):
     global vector_store, main_chain
 
     docs = [Document(page_content=transcript)]
-    splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    chunk_size,chunk_overlap = chunkingConfig(transcript)
+    splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     chunks = splitter.split_documents(docs)
 
     embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")

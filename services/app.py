@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify;
 from getVideoDetails import getVideoDetails;
 from sumTranscript import sumTranscript;
 from chat import update_vector_store, ask_question
+from getChapters import generate_chapters
 
 app = Flask(__name__);
 
@@ -27,12 +28,13 @@ def videoData():
     formatted_transcript = result["formatted_transcript"];
 
     summary = sumTranscript(transcript_text);
+    chapters = generate_chapters(formatted_transcript);
 
-    # update_vector_store(transcript_text);
 
     return jsonify({
             "title":title,
             "transcript":formatted_transcript,
+            "chapter":chapters,
             "summary": summary
         });
     
