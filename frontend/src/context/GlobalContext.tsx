@@ -19,7 +19,7 @@ interface chat {
   message: string;
   timestamp: Date;
 }
-interface video {
+export interface video {
   video_url: string;
   title: string;
   summary: string;
@@ -28,11 +28,18 @@ interface video {
   chatHistory: chat[]
 }
 
+interface message {
+  from: string;
+  text: string;
+}
+
 interface GlobalContextType {
   authUser: AuthUser | null;
   setAuthUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
   selectedVideo: video | null;
   setSelectedVideo: React.Dispatch<React.SetStateAction<video | null>>;
+  chatMessages: message[];
+  setChatMessages: React.Dispatch<React.SetStateAction<message[]>>;
 }
 
 
@@ -49,8 +56,9 @@ export const useGlobalContext = () => {
 export const GlobalContextProvider = ({children} : {children:ReactNode}) => {
   const [authUser, setAuthUser] = useState<AuthUser | null>(JSON.parse(localStorage.getItem("you-user") || "null"));
   const [selectedVideo, setSelectedVideo] = useState<video | null>(null);
+  const [chatMessages, setChatMessages] = useState<message[]>([]);
 
-  return <GlobalContext.Provider value={{authUser,setAuthUser,selectedVideo,setSelectedVideo}}>
+  return <GlobalContext.Provider value={{authUser,setAuthUser,selectedVideo,setSelectedVideo,chatMessages,setChatMessages}}>
     {children}
   </GlobalContext.Provider>
 }

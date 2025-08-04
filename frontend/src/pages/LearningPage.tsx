@@ -18,7 +18,7 @@ function LearningPage() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            'Authorization': 'Bearer ' + authUser?.token,
+            "Authorization": "Bearer " + authUser?.token,
           },
           body: JSON.stringify({"video_url" : `https://www.youtube.com/watch?v=${id}`})
         });

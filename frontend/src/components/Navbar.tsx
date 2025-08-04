@@ -11,7 +11,7 @@ function Navbar() {
   const logoref = useRef<HTMLDivElement | null>(null);
   const navtagsref = useRef<HTMLDivElement | null>(null);
   const navbuttonref = useRef<HTMLDivElement | null>(null);
-  const { authUser, setAuthUser, selectedVideo,setSelectedVideo } = useGlobalContext();
+  const { authUser, setAuthUser, selectedVideo,setSelectedVideo,setChatMessages } = useGlobalContext();
   const navigate = useNavigate();
 
   const handleAuth = () => {
@@ -19,6 +19,7 @@ function Navbar() {
       localStorage.removeItem("you-user");
       setAuthUser(null);
       setSelectedVideo(null);
+      setChatMessages([]);
       navigate("/");
     } else {
       navigate("/signup");

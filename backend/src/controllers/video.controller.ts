@@ -14,7 +14,7 @@ export const getAllVideos = async (req: Request, res: Response, next: NextFuncti
     if (!userId) {
       throw new AppError("User does not have a _id", 500);
     }
-    const videos = await UserVideoData.find({ user: userId }).select("video notes chatHistory").populate<{ video: VideoDocument }>('video');
+    const videos = await UserVideoData.find({ user: userId }).sort({ createdAt: -1 }).select("video notes chatHistory").populate<{ video: VideoDocument }>('video');
 
     const requiredVideosFields: VideoResponse[] = videos.map((record) => {
       return {
