@@ -6,14 +6,18 @@ export interface Config {
   MONGO_URI: string;
   FLASK_URI: string;
   ACCESS_TOKEN_SECRET: string;
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
 }
-
 export interface UserDocument extends Document {
-  username: string;
-  password: string;
+  username?: string;
+  password?: string;
+  googleId?: string;
+  fullname?: string;
+  email?: string;
+  profilePic?: string;
 }
 
-export type userWithoutPassword = Omit<UserDocument, "password">;
 
 export interface transcript_segments {
   timestamp: string;

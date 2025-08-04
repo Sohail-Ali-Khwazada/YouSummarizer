@@ -7,12 +7,14 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import logo from "@/assets/you_logo.png";
 import google from "@/assets/google.png";
 import toast from "react-hot-toast";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 
 function LoginPage() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { setAuthUser } = useGlobalContext();
+  const {handleGoogleLogin} = useGoogleAuth();
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -67,6 +69,7 @@ function LoginPage() {
           <Button
             variant="outline"
             className="w-full h-12 bg-white border border-gray-300 hover:bg-gray-50 flex gap-3.5 cursor-pointer"
+            onClick={handleGoogleLogin}
           >
             <img src={google} alt="Google logo" className="size-4" />
             <p>Continue with Google</p>

@@ -1,9 +1,9 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import User from "../models/user.model.js";
-import { userWithoutPassword } from "../types/custom.js";
 import { NextFunction, Request, Response } from "express";
 import config from "../config/config.js";
 import { AppError } from "../utils/AppError.util.js";
+import { UserDocument } from "../types/custom.js";
 
 
 
@@ -19,7 +19,7 @@ const protectRoute = async(req:Request,res:Response,next:NextFunction) => {
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token,config.ACCESS_TOKEN_SECRET) as JwtPayload;
     
-    const user: userWithoutPassword | null = await User.findById(decoded.userId).select("-password");
+    const user: UserDocument = await User.findById(decoded.userId).select("-password");
 
     if(!user) {
       throw new AppError("User not found",404);

@@ -11,13 +11,13 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
     const { username, password } = req.body;
 
     if (!username || !password) {
-      throw new AppError("Username and password are required",400);
+      throw new AppError("Username and password are required", 400);
     }
 
     const user: UserDocument | null = await User.findOne({ username });
 
     if (user) {
-      throw new AppError("Username already exists",400)
+      throw new AppError("Username already exists", 400)
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -27,20 +27,20 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
       password: hashPassword
     });
 
- 
-    if(!newUser._id) {
-      throw new AppError("User does not have a _id",500);
+
+    if (!newUser._id) {
+      throw new AppError("User does not have a _id", 500);
     }
-    
+
     const token = generateToken(newUser._id.toString());
- 
-    
+
+
 
     if (!token) {
-      throw new AppError("Token generation failed",500);
+      throw new AppError("Token generation failed", 500);
     }
 
-  
+
     res.status(201).json({
       _id: newUser._id,
       username: newUser.username,
@@ -59,25 +59,25 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     const { username, password } = req.body;
 
     if (!username || !password) {
-      throw new AppError("Username and password are required",400);
+      throw new AppError("Username and password are required", 400);
     }
 
     const user: UserDocument | null = await User.findOne({ username });
     const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
     if (!user || !isPasswordCorrect) {
-      throw new AppError("Invalid username or password",400);
+      throw new AppError("Invalid username or password", 400);
     }
 
 
-    if(!user._id) {
-      throw new AppError("User does not have a _id",500);
+    if (!user._id) {
+      throw new AppError("User does not have a _id", 500);
     }
 
     const token = generateToken(user._id.toString());
- 
+
     if (!token) {
-      throw new AppError("Token generation failed",500);
+      throw new AppError("Token generation failed", 500);
     }
 
     res.status(200).json({
@@ -91,3 +91,30 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     next(error);
   }
 };
+
+export const loginGoogle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const user = req.user as UserDocument;
+    if (!user || !user._id) {
+      throw new AppError("Unauthorized", 401);
+    }
+
+    const token = generateToken(user._id.toString());
+
+    res.send(`
+  <script>
+    window.opener.postMessage(${JSON.stringify({
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      profilePic: user.profilePic,
+      token,
+    })}, '*');
+    window.close();
+  </script>
+`);
+  } catch (error) {
+    console.log("Error in loginGoogle controller");
+    next(error);
+  }
+}

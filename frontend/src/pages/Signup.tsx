@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 import logo from "@/assets/you_logo.png";
 import google from "@/assets/google.png";
 import toast from "react-hot-toast";
@@ -13,6 +14,7 @@ function Signup() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { setAuthUser } = useGlobalContext();
+  const {handleGoogleLogin} = useGoogleAuth();
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -71,6 +73,7 @@ function Signup() {
           <Button
             variant="outline"
             className="w-full h-12 bg-white border border-gray-300 hover:bg-gray-50 flex gap-3.5 cursor-pointer"
+            onClick={handleGoogleLogin}
           >
             <img src={google} alt="Google logo" className="size-4" />
             <p>Sign up with Google</p>

@@ -2,7 +2,11 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 
 interface AuthUser {
   _id: string;
-  username: string;
+  username?: string;
+  googleId?: string;
+  fullname?: string;
+  email?: string;
+  profilePic?: string;
   token: string;
 }
 interface transcript_segments {

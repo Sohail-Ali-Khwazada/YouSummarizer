@@ -3,13 +3,14 @@ import { AppError } from "../utils/AppError.util";
 import config from "../config/config";
 import Video from "../models/video.model";
 import UserVideoData from "../models/uservideodata.model";
-import { VideoDocument, UserVideoDataDocument, VideoResponse } from "../types/custom";
+import { VideoDocument, UserVideoDataDocument, VideoResponse, UserDocument } from "../types/custom";
 import { updateVecStore } from "../utils/updateVectorStore";
 
 
 export const getAllVideos = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const userId = req.user?._id;
+    const user = req.user as UserDocument;
+    const userId = user?._id;
     if (!userId) {
       throw new AppError("User does not have a _id", 500);
     }
@@ -34,7 +35,8 @@ export const getAllVideos = async (req: Request, res: Response, next: NextFuncti
 
 export const getVideo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const userId = req.user?._id;
+    const user = req.user as UserDocument;
+    const userId = user?._id;
     const { video_url } = req.body;
     if (!userId) {
       throw new AppError("User does not have a _id", 500);
@@ -117,7 +119,13 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
   }
 }
 
-export const getAns = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getAns = async (req: Request, res: Response, next: NextFunction): Promise<void> => { 
+  const user = req.user as UserDocument;
+  const userId = user?._id;
+  
+  if (!userId) {
+    throw new AppError("User does not have a _id", 500);
+  }  
   const { question } = req.body;
   if(!question) {
     throw new AppError("question is required!", 400);
