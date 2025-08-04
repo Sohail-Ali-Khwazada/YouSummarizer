@@ -136,5 +136,4 @@ export const getAns = async (req: Request, res: Response, next: NextFunction): P
   }
 
   res.status(200).json(data);
-
 }

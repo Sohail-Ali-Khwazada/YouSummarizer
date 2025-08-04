@@ -172,7 +172,6 @@ function Transcripts({
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const timestampText = e.currentTarget.children[0]?.textContent;
-    console.log(timestampText);
 
     if (timestampText) {
       const time = convertIntoSecs(timestampText);
