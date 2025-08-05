@@ -128,8 +128,4 @@ function LeftPanel() {
   );
 }
 
-
-
-
-
 export default LeftPanel;

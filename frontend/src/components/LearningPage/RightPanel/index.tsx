@@ -6,6 +6,7 @@ import ChatScreen from "./ChatScreen";
 import SummaryScreen from "./SummaryScreen";
 import NotesScreen from "./NotesScreen";
 
+
 function RightPanel() {
   const [activePanel, setActivePanel] = useState<string>("Chat");
 

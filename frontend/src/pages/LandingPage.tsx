@@ -1,8 +1,7 @@
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import AvatarGroup from "@/components/AvatarGroup";
-import CardGroup from "@/components/CardGroup";
+import { useGSAP } from "@gsap/react";
+import { AvatarGroup, CardGroup } from "@/components/LandingPage";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
@@ -42,9 +41,11 @@ function LandingPage() {
           recorded lectures
         </div>
         <div className="mt-3 flex gap-4">
-          <button className="bg-white text-black py-3 px-8 rounded-full border text-lg">
-            See features
-          </button>
+          <Link to="/login">
+            <button className="bg-white text-black py-3 px-8 rounded-full border text-lg cursor-pointer">
+              See features
+            </button>
+          </Link>
 
           <Link to="/signup">
             <button className="bg-black text-white py-3 px-8 rounded-full text-lg cursor-pointer">

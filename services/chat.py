@@ -31,15 +31,27 @@ def update_vector_store(transcript):
 
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
     prompt = PromptTemplate.from_template("""
-        You are a helpful AI assistant. Use only the context below from a video transcript to answer the user's question. 
-        Do not use prior knowledge or make up answers.
-        If the answer is not in the context, say: "I could not find the answer in the transcript."
-        Context:
-        {context}
-        Question:
-        {question}
-        Answer:
-        """)
+    You are a helpful AI assistant. Answer the question strictly based ONLY on the transcript context provided below.
+
+    CONTEXT:
+    -----------------
+    {context}
+    -----------------
+
+    INSTRUCTIONS:
+    - Use ONLY the information in the CONTEXT above to answer.
+    - Synthesize and paraphrase the information from the transcript in your own words whenever possible.
+    - Use a short, direct quote ONLY if a precise phrase from the transcript is essential for clarity or evidence.
+    - DO NOT copy large sections of the transcript or rely solely on similar-sounding text.
+    - If the answer is missing, unclear, or cannot be determined from the context, respond ONLY with: "I could not find the answer in the transcript."
+    - DO NOT use any prior knowledge or add information not explicitly stated or clearly implied in the context.
+
+    QUESTION: {question}
+
+    Answer:
+    """)
+
+
     parser = StrOutputParser()
 
     parallel_chain = RunnableParallel({

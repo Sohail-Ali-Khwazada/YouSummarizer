@@ -1,9 +1,8 @@
-import LeftPanel from "@/components/LeftPanel";
-import RightPanel from "@/components/RightPanel";
+import toast from "react-hot-toast";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import { useParams } from "react-router";
+import { LeftPanel,RightPanel } from "@/components/LearningPage";
 
 
 function LearningPage() {

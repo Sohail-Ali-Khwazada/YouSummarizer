@@ -56,13 +56,13 @@ function Navbar() {
           className="flex list-none gap-16 font-medium text-gray-500 ml-12 items-center"
           ref={navtagsref}
         >
-          <Link to={"/"}>
+          <Link to={"/learn"}>
             <li className="cursor-pointer">Features</li>
           </Link>
           <Link to={"/learn"}>
             <li className="cursor-pointer">Learn</li>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/learn"}>
             <li className="cursor-pointer">Careers</li>
           </Link>
         </div>

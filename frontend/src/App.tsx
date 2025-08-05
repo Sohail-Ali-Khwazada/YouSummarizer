@@ -1,4 +1,3 @@
-import { createBrowserRouter, redirect, RouterProvider } from "react-router";
 import HomeLayout from "@/layouts/HomeLayout";
 import LearnLayout from "@/layouts/LearnLayout";
 import LandingPage from "@/pages/LandingPage";
@@ -6,7 +5,7 @@ import Signup from "@/pages/Signup";
 import LoginPage from "@/pages/LoginPage";
 import SearchPage from "@/pages/SearchPage";
 import LearningPage from "@/pages/LearningPage";
-import TestPage from "@/components/TestPage";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router";
 import { GlobalContextProvider } from "@/context/GlobalContext";
 import { Toaster } from "react-hot-toast";
 
@@ -35,12 +34,7 @@ const router = createBrowserRouter([
       { index: true, Component: SearchPage },
       { path: ":id", Component: LearningPage },
     ],
-  },
-  {
-    path: "/test",
-    Component: TestPage
   }
-
 ]);
 
 function App() {
