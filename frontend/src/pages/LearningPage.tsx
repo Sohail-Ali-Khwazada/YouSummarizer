@@ -8,7 +8,7 @@ import { LeftPanel,RightPanel } from "@/components/LearningPage";
 function LearningPage() {
 
   const { id } = useParams();
-  const { setSelectedVideo,authUser } = useGlobalContext();
+  const { setSelectedVideo,authUser,setNote } = useGlobalContext();
 
   useEffect(()=> {
     const fetchVideoData = async() => {
@@ -26,7 +26,9 @@ function LearningPage() {
         if(data.error) {
           throw new Error(data.error);
         }
-        setSelectedVideo(data);
+        const { notes, ...videoDataWithoutNotes } = data;
+        setSelectedVideo(videoDataWithoutNotes);
+        setNote(notes);
       } catch(error) {
           if(error instanceof Error) {
             toast.error(error.message);

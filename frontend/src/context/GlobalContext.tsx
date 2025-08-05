@@ -27,14 +27,14 @@ export interface chapter_segments {
 }
 
 export interface video {
+  _id: string;
   video_url: string;
   title: string;
   summary: string;
   transcript: transcript_segments[];
   chapter: chapter_segments[];
-  notes: string;
-  chatHistory: chat[]
 }
+
 
 interface message {
   from: string;
@@ -48,6 +48,8 @@ interface GlobalContextType {
   setSelectedVideo: React.Dispatch<React.SetStateAction<video | null>>;
   chatMessages: message[];
   setChatMessages: React.Dispatch<React.SetStateAction<message[]>>;
+  note: string;
+  setNote: React.Dispatch<React.SetStateAction<string>>;
 }
 
 
@@ -65,8 +67,9 @@ export const GlobalContextProvider = ({children} : {children:ReactNode}) => {
   const [authUser, setAuthUser] = useState<AuthUser | null>(JSON.parse(localStorage.getItem("you-user") || "null"));
   const [selectedVideo, setSelectedVideo] = useState<video | null>(null);
   const [chatMessages, setChatMessages] = useState<message[]>([]);
+  const [note, setNote] = useState<string>("");
 
-  return <GlobalContext.Provider value={{authUser,setAuthUser,selectedVideo,setSelectedVideo,chatMessages,setChatMessages}}>
+  return <GlobalContext.Provider value={{authUser,setAuthUser,selectedVideo,setSelectedVideo,chatMessages,setChatMessages,note,setNote}}>
     {children}
   </GlobalContext.Provider>
 }

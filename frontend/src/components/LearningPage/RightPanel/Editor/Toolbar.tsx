@@ -17,27 +17,48 @@ import {
   Code2,
   Save,
 } from "lucide-react";
-
 import { Separator } from "@/components/ui/separator";
 import { ToolbarButton } from "./ToolbarButton";
 import toast from "react-hot-toast";
+import { useGlobalContext } from "@/context/GlobalContext";
 
-function isAlignActive(editor: Editor, align: string): boolean {
+
+interface ToolbarProps {
+  editor: Editor;
+}
+
+export const Toolbar = ({ editor }: ToolbarProps) => {
+  const {authUser,selectedVideo,setNote} = useGlobalContext();
+
+  const isAlignActive = (editor: Editor, align: string): boolean => {
   return (
     editor.isActive("paragraph", { textAlign: align }) ||
     editor.isActive("heading", { textAlign: align })
   );
 }
 
-interface ToolbarProps {
-  editor: Editor;
-}
-
-const handleSave = async(editor : Editor) => {
+  const handleSave = async(editor : Editor) => {
   const content = editor.getJSON();
   
   try {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URI}/api/video/saveNotes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + authUser?.token
+      },
+      body: JSON.stringify({
+        videoID: selectedVideo?._id,
+        notes: JSON.stringify(content)
+      })
+    })
+    const data = await res.json();
 
+    if(data.error) {
+      throw new Error(data.error);
+    }
+    toast.success("Notes saved successfully");
+    setNote(data.notes);
   } catch(error) {
     if(error instanceof Error) {
       toast.error(error.message);
@@ -45,7 +66,7 @@ const handleSave = async(editor : Editor) => {
   }
 }
 
-export const Toolbar = ({ editor }: ToolbarProps) => {
+
   return (
     <div className="sticky top-0 z-10 border-b border-border  px-4 py-2">
       <div className="flex flex-wrap items-center gap-0.5">

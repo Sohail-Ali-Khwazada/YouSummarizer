@@ -18,6 +18,7 @@ export const getAllVideos = async (req: Request, res: Response, next: NextFuncti
 
     const requiredVideosFields: VideoResponse[] = videos.map((record) => {
       return {
+        _id: record.video._id,
         video_url: record.video.video_url,
         title: record.video.title,
         summary: record.video.summary,
@@ -54,6 +55,7 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
 
       if (userVideoRecord) {
         res.status(200).json({
+          _id: videoData._id,
           video_url: videoData.video_url,
           title: videoData.title,
           summary: videoData.summary,
@@ -72,6 +74,7 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
       });
 
       res.status(200).json({
+        _id: videoData._id,
         video_url: videoData.video_url,
         title: videoData.title,
         summary: videoData.summary,
@@ -108,6 +111,7 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
     updateVecStore(newVideo.transcript);
 
     res.status(200).json({
+      _id: newVideo._id,
       video_url: newVideo.video_url,
       title: newVideo.title,
       summary: newVideo.summary,
@@ -124,28 +128,66 @@ export const getVideo = async (req: Request, res: Response, next: NextFunction):
 }
 
 export const getAns = async (req: Request, res: Response, next: NextFunction): Promise<void> => { 
-  const user = req.user as UserDocument;
-  const userId = user?._id;
-  
-  if (!userId) {
-    throw new AppError("User does not have a _id", 500);
-  }  
-  const { question } = req.body;
-  if(!question) {
-    throw new AppError("question is required!", 400);
+  try {
+    const user = req.user as UserDocument;
+    const userId = user?._id;
+    
+    if (!userId) {
+      throw new AppError("User does not have a _id", 500);
+    }  
+    const { question } = req.body;
+    if(!question) {
+      throw new AppError("question is required!", 400);
+    }
+
+    const flask_res = await fetch(`${config.FLASK_URI}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question })
+    })
+
+    const data = await flask_res.json();
+
+    if (data.error) {
+      throw new AppError(data.error, 500);
+    }
+
+    res.status(200).json(data);
+  } catch(error) {
+    console.log("Error in getAns controller");
+    next(error);
   }
-
-  const flask_res = await fetch(`${config.FLASK_URI}/api/chat`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question })
-  })
-
-  const data = await flask_res.json();
-
-  if (data.error) {
-    throw new AppError(data.error, 500);
-  }
-
-  res.status(200).json(data);
 }
+
+export const saveNotes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const user = req.user as UserDocument;
+    const userId = user?._id;
+
+    if (!userId) {
+      throw new AppError("User does not have a _id", 500);
+    }
+
+    const { videoID, notes } = req.body;
+
+    if (!videoID || typeof notes !== "string") {
+      throw new AppError("Invalid videoID or notes", 400);
+    }
+
+    const userVideoRecord = await UserVideoData.findOne({ user: userId, video: videoID });
+
+    if (!userVideoRecord) {
+      throw new AppError("User video data not found", 404);
+    }
+
+    userVideoRecord.notes = notes;
+    await userVideoRecord.save();
+
+    res.status(200).json({ notes });
+
+  } catch (error) {
+    console.log("Error in saveNotes controller");
+    next(error);
+  }
+};
+

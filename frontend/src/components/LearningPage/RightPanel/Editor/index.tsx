@@ -4,9 +4,11 @@ import TextAlign from "@tiptap/extension-text-align";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { Toolbar } from "./Toolbar";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 function TiptapEditor() {
   const [, setSelectionRefresh] = useState(0);
+  const { note } = useGlobalContext();
 
   const editor = useEditor({
     extensions: [
@@ -33,8 +35,16 @@ function TiptapEditor() {
   });
 
   useEffect(() => {
+    if (editor && note) {
+      try {
+        const parsedNotes = JSON.parse(note);
+        editor.commands.setContent(parsedNotes);
+      } catch (error) {
+        console.error("Failed to parse notes JSON:", error);
+      }
+    }
     return () => editor?.destroy();
-  }, [editor]);
+  }, [editor, note]);
 
   if (!editor) {
     return null;
