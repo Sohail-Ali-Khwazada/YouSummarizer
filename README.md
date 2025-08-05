@@ -22,14 +22,12 @@ This project combines **RAG (Retrieval-Augmented Generation)** using **LangChain
 
 -----
 
-## 📸 Screenshots
+## 📽️ Demo
 
-> *Add relevant screenshots showing:*
->
->   - *Video playback with the interactive transcript and chapters.*
->   - *The "Chat with Video" feature in action.*
->   - *The rich text note-taking editor.*
->   - *The main dashboard or landing page.*
+[![Watch the demo](https://img.youtube.com/vi/993lIF3qSVY/hqdefault.jpg)](https://youtu.be/993lIF3qSVY)
+
+> Click the thumbnail above to watch the demo of **YouSummarizer**.
+
 
 -----
 
