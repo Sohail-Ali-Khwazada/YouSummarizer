@@ -6,7 +6,6 @@ import ChatScreen from "./ChatScreen";
 import SummaryScreen from "./SummaryScreen";
 import NotesScreen from "./NotesScreen";
 
-
 function RightPanel() {
   const [activePanel, setActivePanel] = useState<string>("Chat");
 
@@ -54,6 +53,7 @@ function RightPanel() {
           </div>
         </button>
       </div>
+
       <div className="overflow-y-auto">
         {activePanel == "Chat" && <ChatScreen />}
         {activePanel == "Summary" && <SummaryScreen />}

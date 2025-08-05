@@ -1,10 +1,10 @@
-// import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor';
+
+import MyEditor from "./Editor"
 
 function NotesScreen() {
   return (
-    <div className="">
-      {/* <SimpleEditor /> */}
-      This is notes screen
+    <div className="h-[83.5vh]">
+      <MyEditor />
     </div>
   )
 }
