@@ -10,11 +10,6 @@ interface AuthUser {
   token: string;
 }
 
-interface chat {
-  sender: "user" | "bot";
-  message: string;
-  timestamp: Date;
-}
 interface transcript_segments {
   _id: string;
   timestamp: string;
