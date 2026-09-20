@@ -1,5 +1,5 @@
 from langchain_core.documents import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain_community.vectorstores import FAISS
 from langchain_core.runnables import RunnableParallel, RunnablePassthrough, RunnableLambda
@@ -25,11 +25,11 @@ def update_vector_store(transcript):
     splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     chunks = splitter.split_documents(docs)
 
-    embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    embedding = GoogleGenerativeAIEmbeddings(model="gemini-embedding-001")
     vector_store = FAISS.from_documents(chunks, embedding)
     retriever = vector_store.as_retriever()
 
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
+    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite")
     prompt = PromptTemplate.from_template("""
     You are a helpful AI assistant. Answer the question strictly based ONLY on the transcript context provided below.
 

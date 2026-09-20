@@ -1,6 +1,6 @@
 from langchain_core.documents import Document
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
@@ -20,7 +20,7 @@ def generate_chapters(transcript_array):
     splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     docs = splitter.split_documents(docs)
 
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")  
+    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite")  
     parser = StrOutputParser()
 
     prompt = PromptTemplate.from_template("""
@@ -38,10 +38,11 @@ def generate_chapters(transcript_array):
     Do **not** surround the JSON with triple backticks or any other characters.
     Make sure the JSON is strictly valid and parseable, with all property names and string values in double quotes.
 
-    Example:
-    [
-        { "startTime": "00:10:00", "title": "AI in Healthcare", "description": "We explore how artificial intelligence is transforming healthcare." }
-    ]
+   Example:
+    A chapter should look like this:
+    startTime: "00:10:00"
+    title: "AI in Healthcare"
+    description: "We explore how artificial intelligence is transforming healthcare."
 
     Transcript chunk:
     {context}
